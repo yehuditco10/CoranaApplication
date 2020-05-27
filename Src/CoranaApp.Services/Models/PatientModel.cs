@@ -7,17 +7,18 @@ namespace CoronaApp.Services.Models
     {
         public string id { get; set; }
         public int age { get; set; }
+        
         public List<LocationModel> locations { get; set; }
         public PatientModel()
         {
 
         }
-        public PatientModel(string id,int age)
-        {
-            this.id = id;
-            this.age = age;
-            //locations=LocationRepository.locations.Where(i => i.patientId == id).ToList();
-        }
+        //public PatientModel(string id,int age)
+        //{
+        //    this.id = id;
+        //    this.age = age;
+        //    //locations=LocationRepository.locations.Where(i => i.patientId == id).ToList();
+        //}
         public Patient ToPatient()
         {
             List<Location> locations = new List<Location>();

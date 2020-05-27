@@ -27,18 +27,8 @@ namespace CoronaApp.Services
                                 List<Location> locations = coronaContext.Locations.Where(l => l.patientId == patient.id).ToList();
                                 if (locations.Count() > 0)
                                 {
-                                    foreach (var location in locations)
-                                    {
-                                        locationsByAge.Add(new LocationModel()
-                                        {
-                                            startDate = location.startDate,
-                                            endDate = location.endDate,
-                                            city = location.city,
-                                            location = location.location,
-                                            patientId = location.patientId,
-
-                                        });
-                                    }
+                                    LocationModel locationModel = new LocationModel();
+                                    locationsByAge.AddRange(locationModel.ToLocationModel(locations));
                                 }
                             }
                             return locationsByAge;
