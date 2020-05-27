@@ -21,9 +21,7 @@ namespace CoronaApp.Services.Models
             return new LocationSearch()
             {
                 city=locationSearchModel.city,
-                age=locationSearchModel.age
-
-             
+                age=locationSearchModel.age             
             };
         }
         public LocationSearchModel ToLocationSearchModel(LocationSearch locationSearch)
@@ -31,8 +29,7 @@ namespace CoronaApp.Services.Models
             return new LocationSearchModel()
             {
                 city = locationSearch.city,
-                age=locationSearch.age
-               
+                age=locationSearch.age               
             };
         }
     }

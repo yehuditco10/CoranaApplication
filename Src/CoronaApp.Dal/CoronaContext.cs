@@ -17,7 +17,7 @@ namespace CoronaApp.Dal
         public DbSet<LocationSearch> LocationSearches { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source = DESKTOP-1HT6NS2; Initial Catalog = Corona_DB; Integrated Security = True");
+            optionsBuilder.UseSqlServer("Data Source = ILBHARTMANLT; Initial Catalog = Corona_DB; Integrated Security = True");
             base.OnConfiguring(optionsBuilder);
         }
         public CoronaContext(DbContextOptions<CoronaContext> options)
