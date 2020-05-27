@@ -180,6 +180,7 @@ function sortDates(listToSort) {
 }
 function getLocationByPatientId() {
     const patientid = document.getElementById('patientID').value;
+    document.getElementById("age").value = "";
     if (patientid === "" || patientid === null) {
         cleanTable();
         added = false;
