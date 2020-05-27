@@ -24,7 +24,7 @@ namespace CoronaApp.Api.Controllers
 
         // POST api/<PatientController>
         [HttpPost]
-        public void Post([FromBody]Patient patient)
+        public void Post([FromBody]PatientModel patient)
         {
             IPatientRepository patientRepo = new PatientRepository();
             patientRepo.Save(patient);
@@ -36,7 +36,13 @@ namespace CoronaApp.Api.Controllers
         {
 
         }
-
+        //[HttpGet("{id}")]
+        //public void func1(string id)
+        //{
+        //    PatientModel p = new PatientModel(id);
+        //    PatientRepository patientRepo = new PatientRepository();
+        //    patientRepo.func(p);
+        //}
 
     }
 }

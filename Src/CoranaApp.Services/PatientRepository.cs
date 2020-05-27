@@ -5,31 +5,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CoronaApp.Services;
+using CoronaApp.Dal;
+using CoronaApp.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoronaApp.Services
 {
     public class PatientRepository : IPatientRepository
     {
-        public Patient Get(string id)
+        public PatientModel Get(string id)
         {
-            Patient patient = new Patient(id);
-            if (patient.locations.Count() > 0)
-                return patient;
-            throw new Exception("didn't find");
+            using (CoronaContext coronaContext = new CoronaContext())
+            {
+                Patient patient = coronaContext.Patients.Include(p => p.locations)
+                    .FirstOrDefault(pa => pa.id == id);
+                if (patient == null)
+                {
+                    throw new Exception("didn't find");
+                }
+                if (patient.locations.Count() > 0)
+                {
+                    PatientModel p = new PatientModel();
+                    return p.ToPatientModel(patient);
+                }
+            }
+            throw new Exception("no location");
         }
 
-        public void Save(Patient patient)
+        public void Save(PatientModel patient)
         {
-            try
+            using (CoronaContext coronaContext = new CoronaContext())
             {
-               LocationRepository.locations.RemoveAll(l => l.patientId == patient.id);
-               LocationRepository.locations.AddRange(patient.locations);
+                try
+                {
+                    List<Location> locationsToUpdate = coronaContext.Locations.Where(l => l.patientId == patient.id).ToList();
+                    coronaContext.Locations.RemoveRange(locationsToUpdate);
+                    coronaContext.Locations.AddRange(patient.ToPatient().locations);
+                    coronaContext.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw new Exception("adding failed");
+                }
             }
-            catch (Exception)
-            {
-                throw new Exception("adding failed");
-            }
+
         }
+
+
         //public static async Task<List<Location>> GetLocationsByPatientAsync(String id)
         //{
         //    try

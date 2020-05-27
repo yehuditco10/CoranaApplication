@@ -16,7 +16,7 @@ namespace CoronaApp.Api.Controllers
     {
         // GET: api/<LocationController>
         [HttpGet]
-        public IEnumerable<Location> Get([FromQuery] LocationSearch locationSearch=null)
+        public IEnumerable<LocationModel> Get([FromQuery] LocationSearchModel locationSearch=null)
         {
             ILocationRepository locationRepo = new LocationRepository();
             return locationRepo.Get(locationSearch);

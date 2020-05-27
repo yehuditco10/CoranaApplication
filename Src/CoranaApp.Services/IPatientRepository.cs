@@ -7,8 +7,8 @@ namespace CoronaApp.Services
 {
     public interface IPatientRepository
     {
-        Patient Get(string id);
+        PatientModel Get(string id);
 
-        void Save(Patient patient);
+        void Save(PatientModel patient);
     }
 }

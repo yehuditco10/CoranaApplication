@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace CoronaApp.Services.Models
+namespace CoronaApp.Entities
 {
-    public class Location
+   public class Location
     {
-       
+
+        public int id { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
         public string city { get; set; }
@@ -23,5 +26,6 @@ namespace CoronaApp.Services.Models
         {
 
         }
+        
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CoronaApp.Services
 {
-    public interface ILocationRepository
+    public interface ILocationSearchRepository
     {
         ICollection<LocationModel> Get(LocationSearchModel locationSearch);
     }

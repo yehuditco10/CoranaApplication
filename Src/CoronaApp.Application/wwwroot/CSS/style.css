@@ -33,10 +33,14 @@ table tr td:last-child {
     text-transform: capitalize;
 }
 
-#patientID {
+#patientID, #age {
     color: #5099eff2;
     border-color: lightslategray;
     border-width: thin;
+    
+}
+#age {
+    margin-left: 3vw;
 }
 
 input {
@@ -54,7 +58,7 @@ input {
     color: white;
 }
 
-#search {
+#search, #searchAge {
     width: 5vh;
     margin-bottom: -2vh;
 }
@@ -71,4 +75,9 @@ h1 {
     color: white;
     border-radius: 1vw;
     width: 10vw;
+}
+#or {
+    color: #716363;
+    font-size: larger;
+    margin-left: 2vw;
 }

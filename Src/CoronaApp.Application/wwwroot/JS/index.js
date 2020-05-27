@@ -39,6 +39,7 @@ getListFromServer();
 let added = false;
 const searchBottun = document.getElementById('search');
 searchBottun.addEventListener("click", getLocationByPatientId);
+document.getElementById("searchAge").addEventListener("click", getLocationByAge);
 
 const patientLocations = [];
 const helloTitle = document.createElement('h1');
@@ -207,6 +208,10 @@ function getLocationByPatientId() {
         xhr.open("GET", url, true);
         xhr.send();
     }
+}
+function getLocationByAge() {
+    const age = document.getElementById("age").value;
+    console.log(age);
 }
 
 //function save -return patient

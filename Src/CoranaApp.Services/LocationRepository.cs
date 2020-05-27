@@ -8,15 +8,15 @@ namespace CoronaApp.Services
 {
    public class LocationRepository : ILocationRepository
     {
-       public static List<Location> locations= new List<Location>()
+       public static List<LocationModel> locations= new List<LocationModel>()
             {
-                new Location("Jerusalem",new DateTime(2005, 12, 12),new DateTime(2005, 11, 12),"school","111"),
-                new Location("Bney Brak",new DateTime(2004, 12, 12),new DateTime(2004, 11, 12),"park","111"),
-                new Location("Bney Brak",new DateTime(2004, 12, 12),new DateTime(2004, 11, 12),"library","111"),
-                new Location("Jerusalem",new DateTime(2005, 12, 12),new DateTime(2005, 11, 12),"restaurant","222"),
+                new LocationModel("Jerusalem",new DateTime(2005, 12, 12),new DateTime(2005, 11, 12),"school","111"),
+                new LocationModel("Bney Brak",new DateTime(2004, 12, 12),new DateTime(2004, 11, 12),"park","111"),
+                new LocationModel("Bney Brak",new DateTime(2004, 12, 12),new DateTime(2004, 11, 12),"library","111"),
+                new LocationModel("Jerusalem",new DateTime(2005, 12, 12),new DateTime(2005, 11, 12),"restaurant","222"),
             };
         
-        public ICollection<Location> Get(LocationSearch locationSearch=null)
+        public ICollection<LocationModel> Get(LocationSearchModel locationSearch=null)
         {
             try
             {
