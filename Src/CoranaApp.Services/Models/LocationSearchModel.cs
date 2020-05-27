@@ -1,4 +1,5 @@
 ﻿using CoronaApp.Entities;
+using System;
 
 namespace CoronaApp.Services.Models
 {
@@ -7,6 +8,7 @@ namespace CoronaApp.Services.Models
       
         public string city { get; set; }
         public int age { get; set; }
+        public DateTime date { get; set; }
         public LocationSearchModel(string city,int age)
         {
             this.city = city;
@@ -21,7 +23,8 @@ namespace CoronaApp.Services.Models
             return new LocationSearch()
             {
                 city=locationSearchModel.city,
-                age=locationSearchModel.age             
+                age=locationSearchModel.age,
+                date=locationSearchModel.date
             };
         }
         public LocationSearchModel ToLocationSearchModel(LocationSearch locationSearch)
@@ -29,7 +32,8 @@ namespace CoronaApp.Services.Models
             return new LocationSearchModel()
             {
                 city = locationSearch.city,
-                age=locationSearch.age               
+                age=locationSearch.age,
+                date=locationSearch.date
             };
         }
     }

@@ -59,11 +59,12 @@ function locationsForPatient() {
     if (added === false)
         addAddingOption();
 }
-function createPathTable(patientLocations) {
+function createPathTable(patientLocations,allowEdit) {
     const table = document.getElementById("pathsTable");
     const row = table.insertRow(0);
     const colNames = Object.getOwnPropertyNames(locations[0]);
-    for (let i = 0; i < 5; i++) {
+    const numCol = allowEdit === true ? 5 : 4;
+    for (let i = 0; i < numCol; i++) {
         const cell = row.insertCell(i);
         if (i !== 4) {
             cell.innerHTML = colNames[i];
@@ -79,9 +80,12 @@ function createPathTable(patientLocations) {
             const path = patientLocations[i];
             cell.innerHTML = path[cellName];
         }
-        const cancle = row.insertCell(4);
-        cancle.innerHTML = "    X ";
-        cancle.addEventListener('click', removePath);
+        if (allowEdit == true) {
+            const cancle = row.insertCell(4);
+            cancle.innerHTML = "    X ";
+            cancle.addEventListener('click', removePath);
+        }
+
     }
 }
 function addNewLocation() {
@@ -192,7 +196,7 @@ function getLocationByPatientId() {
                 if (jLocations.length > 0) {
                     patientLocations.splice(0, patientLocations.length);
                     patientLocations.push(...jLocations);
-                    createPathTable(patientLocations);
+                    createPathTable(patientLocations, true);
                 }
                 if (added === false)
                     addAddingOption();
@@ -211,6 +215,35 @@ function getLocationByPatientId() {
 }
 function getLocationByAge() {
     const age = document.getElementById("age").value;
+    document.getElementById("addLocation").innerHTML = "";
+    document.getElementById("saveLocations").innerHTML = "";
+    document.getElementById("patientID").value = "";
+    if (age === "" && age === null) {
+        cleanTable();
+        added = false;
+    }
+    else {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 || this.status == 200) {
+                cleanTable();
+                const jResponse = JSON.parse(this.responseText);
+
+                if (jResponse.length > 0) {
+                    patientLocations.splice(0, patientLocations.length);
+                    patientLocations.push(...jResponse);
+                    createPathTable(patientLocations,false);
+                }
+
+            }
+            if (this.status === 404 || this.response === null) {
+                cleanTable();
+            }
+        };
+        const url = BASICURL + "LocationSearch?locationSearch.age=" + age;
+        xhttp.open("GET", url, "true");
+        xhttp.send();
+    }
     console.log(age);
 }
 
@@ -249,9 +282,9 @@ function saveChanges() {
     var xhttp = new XMLHttpRequest();
     const id = document.getElementById('patientID').value;
     const body = {
-            id:id ,
-            locations:patientLocations
-        }
+        id: id,
+        locations: patientLocations
+    }
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("save").value = "saved !";

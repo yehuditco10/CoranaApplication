@@ -1,5 +1,6 @@
 ﻿using CoronaApp.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace CoronaApp.Services.Models
 {
@@ -31,7 +32,7 @@ namespace CoronaApp.Services.Models
                 startDate = locationModel.startDate,
                 endDate = locationModel.endDate,
                 city = locationModel.city,
-                location = locationModel.city,
+                location = locationModel.location,
                 patientId = locationModel.patientId
             };
         }
@@ -42,9 +43,29 @@ namespace CoronaApp.Services.Models
                 startDate = location.startDate,
                 endDate = location.endDate,
                 city = location.city,
-                location = location.city,
+                location = location.location,
                 patientId = location.patientId
             };
+        }
+
+        public List<Location> ToLocation(List<LocationModel> locationsModel)
+        {
+            List<Location> locations = new List<Location>();
+            foreach (var location in locationsModel)
+            {
+                locations.Add(ToLocation(location));
+            }
+            return locations;
+        }
+
+        public List<LocationModel> ToLocationModel(List<Location> locations)
+        {
+            List<LocationModel> locationsModel = new List<LocationModel>();
+            foreach (var location in locations)
+            {
+                locationsModel.Add(ToLocationModel(location));
+            }
+            return locationsModel; 
         }
     }
 }
