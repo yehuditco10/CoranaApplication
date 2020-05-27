@@ -158,6 +158,7 @@ function cleanAddingOption() {
 initList(locations);
 document.getElementById('cityInput').addEventListener("change", filterCity);
 document.getElementById('select').addEventListener("change", filterCity);
+document.getElementById('send').addEventListener("click", searchByDate );
 function initList(listToInit) {
     document.getElementById('list').innerHTML = '';
     let sorted = sortDates(listToInit);
@@ -299,25 +300,41 @@ function saveChanges() {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.send(JSON.stringify(body));
 }
-
+function loadServerResponse(list) {
+    const jLocations = JSON.parse(list);
+    if (jLocations.length > 0) {
+        locations.splice(0, patientLocations.length);
+        locations.push(...jLocations)
+        initList(jLocations)
+    }
+}
 function getListFromServer(city = "") {
     if (city != "") city = "?locationSearch.city=" + city;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            const jLocations = JSON.parse(this.responseText);
-            if (jLocations.length > 0) {
-                locations.splice(0, patientLocations.length);
-                locations.push(...jLocations)
-                initList(jLocations)
-            }
+            loadServerResponse(this.responseText);
         }
     };
     xhttp.open("GET", BASICURL + "location" + city, true);
     xhttp.send();
 }
+function searchByDate() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const body = {
+        startDate: startDate,
+        endDate: endDate
+    }
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            alert("succes" + this.responseText);
+            loadServerResponse(this.responseText);
+        }
+    };
+    xhttp.open("POST", BASICURL + "LocationSearch", true);  
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+    xhttp.send(JSON.stringify(body));
 
-
-//
-// "start": "webpack-dev-server --open --proxy-config proxy.json"
-
+}

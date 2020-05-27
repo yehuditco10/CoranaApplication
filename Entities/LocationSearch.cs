@@ -10,7 +10,8 @@ namespace CoronaApp.Entities
         public string city { get; set; }
         public int age { get; set; }
 
-        public DateTime date { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
         //public LocationSearch(string city)
         //{
         //    this.city = city;
