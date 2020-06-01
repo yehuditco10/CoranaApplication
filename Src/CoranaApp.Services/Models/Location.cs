@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 namespace CoronaApp.Services.Models
 {
-    public class LocationModel
+    public class Location
     {
-     
+        public int id { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
         public string city { get; set; }
         public string location { get; set; }
         public string patientId { get; set; }
 
-        public LocationModel(string city, DateTime startDate, DateTime endDate, string location, string patientId)
+        public Location(string city, DateTime startDate, DateTime endDate, string location, string patientId)
         {
             this.city = city;
             this.startDate = startDate;
@@ -21,11 +21,11 @@ namespace CoronaApp.Services.Models
             this.location = location;
             this.patientId = patientId;
         }
-        public LocationModel()
+        public Location()
         {
 
         }
-        public Location ToLocation(LocationModel locationModel)
+        public Location ToLocation(Location locationModel)
         {
             return new Location()
             {
@@ -36,9 +36,9 @@ namespace CoronaApp.Services.Models
                 patientId = locationModel.patientId
             };
         }
-        public LocationModel ToLocationModel(Location location)
+        public Location ToLocationModel(Location location)
         {
-            return new LocationModel()
+            return new Location()
             {
                 startDate = location.startDate,
                 endDate = location.endDate,
@@ -48,7 +48,7 @@ namespace CoronaApp.Services.Models
             };
         }
 
-        public List<Location> ToLocation(List<LocationModel> locationsModel)
+        public List<Location> ToLocation(List<Location> locationsModel)
         {
             List<Location> locations = new List<Location>();
             foreach (var location in locationsModel)
@@ -58,9 +58,9 @@ namespace CoronaApp.Services.Models
             return locations;
         }
 
-        public List<LocationModel> ToLocationModel(List<Location> locations)
+        public List<Location> ToLocationModel(List<Location> locations)
         {
-            List<LocationModel> locationsModel = new List<LocationModel>();
+            List<Location> locationsModel = new List<Location>();
             foreach (var location in locations)
             {
                 locationsModel.Add(ToLocationModel(location));

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CoronaApp.Services
 {
-    public interface IPatientRepository
+   public interface IPatientService
     {
         Patient Get(string id);
 

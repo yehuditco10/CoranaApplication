@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Entities\CoronaApp.Entities.csproj" />
-    <ProjectReference Include="..\CoronaApp.Dal\CoronaApp.Dal.csproj" />
   </ItemGroup>
 
 </Project>

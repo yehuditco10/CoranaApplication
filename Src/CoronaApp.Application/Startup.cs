@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using CoronaApp.Dal;
 using Microsoft.EntityFrameworkCore;
+using CoronaApp.Services;
 
 namespace CoronaApp.Api
 {
@@ -29,8 +30,12 @@ namespace CoronaApp.Api
         {
             services.AddControllers();
             services.AddDbContext<CoronaContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("coronaConnection")));
-         
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("coronaConnection")));
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Entities\CoronaApp.Entities.csproj" />
+    <ProjectReference Include="..\CoranaApp.Services\CoronaApp.Services.csproj" />
   </ItemGroup>
 
 </Project>

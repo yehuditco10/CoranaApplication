@@ -4,25 +4,25 @@ using System.Collections.Generic;
 
 namespace CoronaApp.Services.Models
 {
-    public class LocationSearchModel
+    public class LocationSearch
     {
-
+        public int id { get; set; }
         public string city { get; set; }
         public int age { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
-        public LocationSearchModel(string city, int age, DateTime startDate, DateTime endDate)
+        public LocationSearch(string city, int age, DateTime startDate, DateTime endDate)
         {
             this.endDate = endDate;
             this.startDate = startDate;
             this.city = city;
             this.age = age;
         }
-        public LocationSearchModel()
+        public LocationSearch()
         {
 
         }
-        public LocationSearch ToLocationSearch(LocationSearchModel locationSearchModel)
+        public LocationSearch ToLocationSearch(LocationSearch locationSearchModel)
         {
             return new LocationSearch()
             {
@@ -32,9 +32,9 @@ namespace CoronaApp.Services.Models
                 endDate = locationSearchModel.endDate
             };
         }
-        public LocationSearchModel ToLocationSearchModel(LocationSearch locationSearch)
+        public LocationSearch ToLocationSearchModel(LocationSearch locationSearch)
         {
-            return new LocationSearchModel()
+            return new LocationSearch()
             {
                 city = locationSearch.city,
                 age = locationSearch.age,
@@ -42,17 +42,17 @@ namespace CoronaApp.Services.Models
                 startDate = locationSearch.startDate
             };
         }
-        public List<LocationSearch> ToLocationSearch(List<LocationSearchModel> locationSearchModel)
+        public List<LocationSearch> ToLocationSearch(List<LocationSearch> locationSearchModel)
         {
             List<LocationSearch> returnObj = new List<LocationSearch>();
-            LocationSearchModel searchModel = new LocationSearchModel();
+            LocationSearch searchModel = new LocationSearch();
             locationSearchModel.ForEach(l => returnObj.Add(searchModel.ToLocationSearch(l)));
             return returnObj;
         }
-        public List<LocationSearchModel> ToLocationSearchModel(List<LocationSearch> locationSearch)
+        public List<LocationSearch> ToLocationSearchModel(List<LocationSearch> locationSearch)
         {
-            List<LocationSearchModel> returnObj = new List<LocationSearchModel>();
-            LocationSearchModel  location = new LocationSearchModel();
+            List<LocationSearch> returnObj = new List<LocationSearch>();
+            LocationSearch  location = new LocationSearch();
             locationSearch.ForEach(l => returnObj.Add(location.ToLocationSearchModel(l)));
             return returnObj;
         }

@@ -13,17 +13,17 @@ namespace CoronaApp.Api.Controllers
     [ApiController]
     public class LocationSearchController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<LocationModel> Get([FromQuery] LocationSearchModel locationSearch = null)
-        {
-            ILocationSearchRepository locationSearchRepo = new LocationSearchRepository();
-            return locationSearchRepo.Get(locationSearch);
-        }
-        [HttpPost]
-        public IEnumerable<LocationModel> Post([FromBody] LocationSearchModel locationSearch)
-        {
-            ILocationSearchRepository locationSearchRepo = new LocationSearchRepository();
-            return locationSearchRepo.GetByDate(locationSearch);
-        }
+        //[HttpGet]
+        //public IEnumerable<LocationModel> Get([FromQuery] LocationSearchModel locationSearch = null)
+        //{
+        //    ILocationSearchRepository locationSearchRepo = new LocationSearchRepository();
+        //    return locationSearchRepo.Get(locationSearch);
+        //}
+        //[HttpPost]
+        //public IEnumerable<LocationModel> Post([FromBody] LocationSearchModel locationSearch)
+        //{
+        //    ILocationSearchRepository locationSearchRepo = new LocationSearchRepository();
+        //    return locationSearchRepo.GetByDate(locationSearch);
+        //}
     }
 }

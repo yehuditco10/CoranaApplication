@@ -62,7 +62,7 @@ function locationsForPatient() {
 function createPathTable(patientLocations,allowEdit) {
     const table = document.getElementById("pathsTable");
     const row = table.insertRow(0);
-    const colNames = Object.getOwnPropertyNames(locations[0]);
+    const colNames = Object.getOwnPropertyNames(patientLocations[0]);
     const numCol = allowEdit === true ? 5 : 4;
     for (let i = 0; i < numCol; i++) {
         const cell = row.insertCell(i);
@@ -180,6 +180,7 @@ function sortDates(listToSort) {
     return listToSort.sort(compareDates);
 }
 function getLocationByPatientId() {
+    console.log(added);
     const patientid = document.getElementById('patientID').value;
     document.getElementById("age").value = "";
     if (patientid === "" || patientid === null) {
@@ -220,9 +221,10 @@ function getLocationByAge() {
     document.getElementById("addLocation").innerHTML = "";
     document.getElementById("saveLocations").innerHTML = "";
     document.getElementById("patientID").value = "";
+    added = false;
     if (age === "" && age === null) {
         cleanTable();
-        added = false;
+       
     }
     else {
         const xhttp = new XMLHttpRequest();

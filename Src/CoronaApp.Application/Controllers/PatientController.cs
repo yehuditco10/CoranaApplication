@@ -13,21 +13,23 @@ namespace CoronaApp.Api.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-
+        private readonly IPatientService _patientService;
+        public PatientController(IPatientService patientService)
+        {
+            _patientService = patientService;
+        }
         // GET api/<PatientController>/5
         [HttpGet("{id}")]
         public object Get(string id)
         {
-            IPatientRepository patientRepo = new PatientRepository();
-            return patientRepo.Get(id);
+            return _patientService.Get(id);
         }
 
         // POST api/<PatientController>
         [HttpPost]
-        public void Post([FromBody]PatientModel patient)
+        public void Post([FromBody]Patient patient)
         {
-            IPatientRepository patientRepo = new PatientRepository();
-            patientRepo.Save(patient);
+            _patientService.Save(patient);
         }
 
         // PUT api/<PatientController>/5

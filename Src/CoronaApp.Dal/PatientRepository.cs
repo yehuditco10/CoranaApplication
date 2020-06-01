@@ -1,4 +1,4 @@
-﻿using CoronaApp.Services.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,50 +6,56 @@ using System.Text;
 using System.Threading.Tasks;
 using CoronaApp.Services;
 using CoronaApp.Dal;
-using CoronaApp.Entities;
 using Microsoft.EntityFrameworkCore;
+using CoronaApp.Services.Models;
 
 namespace CoronaApp.Services
 {
     public class PatientRepository : IPatientRepository
     {
-        public PatientModel Get(string id)
+        private readonly CoronaContext _context;
+        public PatientRepository(CoronaContext coronaContext)
         {
-            using (CoronaContext coronaContext = new CoronaContext())
+            _context = coronaContext;
+        }
+        public Patient Get(string id)
+        {
+
+            Patient patient = _context.Patients.Include(p => p.locations)
+                 .FirstOrDefault(pa => pa.id == id);
+            if (patient == null)
             {
-                Patient patient = coronaContext.Patients.Include(p => p.locations)
-                    .FirstOrDefault(pa => pa.id == id);
-                if (patient == null)
-                {
-                    throw new Exception("didn't find");
-                }
-                if (patient.locations.Count() > 0)
-                {
-                    PatientModel p = new PatientModel();
-                    return p.ToPatientModel(patient);
-                }
+                throw new Exception("didn't find");
             }
+            if (patient.locations.Count() > 0)
+            {
+
+                return patient;
+            }
+
             throw new Exception("no location");
         }
 
-        public void Save(PatientModel patient)
+        public void Save(Patient patient)
         {
-            using (CoronaContext coronaContext = new CoronaContext())
+
+            try
             {
-                try
-                {
-                    List<Location> locationsToUpdate = coronaContext.Locations.Where(l => l.patientId == patient.id).ToList();
-                    coronaContext.Locations.RemoveRange(locationsToUpdate);
-                    coronaContext.Locations.AddRange(patient.ToPatient().locations);
-                    coronaContext.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    throw new Exception("adding failed");
-                }
+                List<Location> locationsToUpdate = _context.Locations.Where(l => l.patientId == patient.id).ToList();
+                _context.Locations.RemoveRange(locationsToUpdate);
+                _context.Locations.AddRange(patient.locations);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw new Exception("adding failed");
             }
 
+
         }
+
+
+
 
 
         //public static async Task<List<Location>> GetLocationsByPatientAsync(String id)
