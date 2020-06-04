@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using CoronaApp.Dal;
 using Microsoft.EntityFrameworkCore;
 using CoronaApp.Services;
+using Microsoft.AspNetCore.Http;
+using CoronaApp.Api.Middleware;
 
 namespace CoronaApp.Api
 {
@@ -45,17 +47,35 @@ namespace CoronaApp.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler("");//"/error"
+                //securing (https)
+                app.UseHsts();
+            }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseAuthorization();
+
             app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            //middelware
+            //app.Use(async (context, next) =>
+            //{
+            //    // Do work that doesn't write to the Response.
+            //    await next.Invoke();
+            //    // Do logging or other work that doesn't write to the Response.
+            //});
+            //app.Run(async context =>
+            //{
+            //    await context.Response.WriteAsync("Hello, World!");
+            //});
         }
     }
 }

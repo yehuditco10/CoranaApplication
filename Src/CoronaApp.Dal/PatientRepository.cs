@@ -8,6 +8,7 @@ using CoronaApp.Services;
 using CoronaApp.Dal;
 using Microsoft.EntityFrameworkCore;
 using CoronaApp.Services.Models;
+using Serilog;
 
 namespace CoronaApp.Services
 {
@@ -20,19 +21,20 @@ namespace CoronaApp.Services
         }
         public Patient Get(string id)
         {
-
+            
             Patient patient = _context.Patients.Include(p => p.locations)
                  .FirstOrDefault(pa => pa.id == id);
             if (patient == null)
             {
+                Log.Error("Patient {pateient} didn't find", id);
                 throw new Exception("didn't find");
             }
             if (patient.locations.Count() > 0)
             {
-
+                Log.Information("Get locations for patient {pateient}", id);
                 return patient;
             }
-
+           
             throw new Exception("no location");
         }
 
@@ -45,6 +47,7 @@ namespace CoronaApp.Services
                 _context.Locations.RemoveRange(locationsToUpdate);
                 _context.Locations.AddRange(patient.locations);
                 _context.SaveChanges();
+                Log.Information("saved locations for patient {pateient}", patient.id);
             }
             catch (Exception)
             {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoronaApp.Services;
 using CoronaApp.Services.Models;
+using Serilog;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CoronaApp.Api.Controllers
@@ -16,20 +17,39 @@ namespace CoronaApp.Api.Controllers
         private readonly IPatientService _patientService;
         public PatientController(IPatientService patientService)
         {
+
             _patientService = patientService;
         }
         // GET api/<PatientController>/5
         [HttpGet("{id}")]
         public object Get(string id)
         {
-            return _patientService.Get(id);
+            try
+            {
+                return _patientService.Get(id);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
         }
 
         // POST api/<PatientController>
         [HttpPost]
         public void Post([FromBody]Patient patient)
         {
-            _patientService.Save(patient);
+            try
+            {
+                _patientService.Save(patient);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
         }
 
         // PUT api/<PatientController>/5
